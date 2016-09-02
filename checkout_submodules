@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo "Checking out submodules to their correct versions..."
+git submodule init
+git submodule update
+cd modules/apache
+git checkout -q 1.10.0
+cd ../apt
+git checkout -q 2.2.2
+cd ../curator
+git checkout -q 2.3.1
+cd ../datacat
+git checkout -q 0.6.2
+cd ../elasticsearch
+git checkout -q 0.13.2
+cd ../file_concat
+git checkout -q 1.0.1
+cd ../kibana4
+git checkout -q v1.0.17
+cd ../logstash
+git checkout -q 0.6.4
+cd ../stdlib
+git checkout -q 4.12.0
+cd ../yum
+git checkout -q 0.9.8

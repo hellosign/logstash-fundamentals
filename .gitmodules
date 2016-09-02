@@ -1,0 +1,40 @@
+[submodule "modules/elasticsearch"]
+	path = modules/elasticsearch
+	url = https://github.com/elastic/puppet-elasticsearch.git
+	branch = tag/0.13.2
+[submodule "modules/stdlib"]
+	path = modules/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+	branch = releases/tag/4.12.0
+[submodule "modules/apt"]
+	path = modules/apt
+	url = https://github.com/puppetlabs/puppetlabs-apt.git
+	branch = release/tag/2.2.2
+[submodule "modules/yum"]
+	path = modules/yum
+	url = https://github.com/CERIT-SC/puppet-yum.git
+	branch = releases/tag/0.9.8
+[submodule "modules/datacat"]
+	path = modules/datacat
+	url = https://github.com/richardc/puppet-datacat.git
+	branch = 5a6114cd41823160bdb01dad6eb0e2af85a8fa69
+[submodule "modules/logstash"]
+	path = modules/logstash
+	url = https://github.com/elastic/puppet-logstash.git
+	branch = f56acd98c7bd126525d02a9ade8bc59d73e5f894
+[submodule "modules/file_concat"]
+	path = modules/file_concat
+	url = https://github.com/electrical/puppet-lib-file_concat.git
+	branch = ebc6a32b64bfda92509146d422ab30bd1b0f4610
+[submodule "modules/kibana4"]
+        path = modules/kibana4
+        url = https://github.com/lesaux/puppet-kibana4.git
+        branch = v1.0.17
+[submodule "modules/curator"]
+        path = modules/curator
+        url = https://github.com/jlambert121/jlambert121-curator.git
+        branch = 2.3.1
+[submodule "modules/apache"]
+        path = modules/apache
+        url = https://github.com/puppetlabs/puppetlabs-apache.git
+        branch = 1.10.0
