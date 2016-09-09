@@ -1,0 +1,25 @@
+<%- if @twitter_consumer_key == false -%>
+# input {
+#   # To get these strings, go here: https://dev.twitter.com/apps/new
+#   # See also: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-twitter.html
+#   twitter {
+#     consumer_key => 'string'
+#     consumer_secret => 'string'
+#     oauth_token => 'string'
+#     oauth_token_secret => 'string'
+#     keywords => [ 'string', 'string' ]
+#   }
+# }
+<%- else -%> 
+input {
+  # Documentation: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-twitter.html
+  twitter {
+    consumer_key => "<%= @twitter_consumer_key %>"
+    consumer_secret => "<%= @twitter_consumer_secret %>"
+    oauth_token => "<%= @twitter_oauth_token %>"
+    oauth_token_secret => "<%= @twitter_oauth_token_secret %>"
+    keywords => [ "<%= @nasa_keywords.join('", "') %>" ]
+    type => "twitter"
+  }
+}
+<%- end -%>

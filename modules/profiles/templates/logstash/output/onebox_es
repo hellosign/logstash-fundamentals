@@ -1,0 +1,13 @@
+output {
+  # Documented here: https://www.elastic.co/guide/en/logstash/current/plugins-outputs-elasticsearch.html
+  #
+  # The ElasticSearch output is rather complex, and can handle many cases. As you would expect for an
+  # output to another Elastic product. This example simply dumps everything into indexes prefixed with
+  # "onebox" and rotating daily.
+  #
+  elasticsearch {
+    hosts => [ "127.0.0.1" ]
+    index => "onebox-%{+YYYY.MM.dd}"
+    manage_template => true
+  }
+}

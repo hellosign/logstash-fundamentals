@@ -1,0 +1,9 @@
+input {
+  syslog {
+    # By default, it will listen on 0.0.0.0:514
+    # Binding to UDP:514 requires running as root on Ubuntu.
+    # Documentation: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-syslog.html
+    port => 514
+    type => "syslog-server"
+  }
+}

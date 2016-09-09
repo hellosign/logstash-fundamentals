@@ -1,0 +1,18 @@
+filter {
+  if [type] == "syslog-file" {
+    # Syslog parsing is handled through Grok.
+    # Documentation: https://www.elastic.co/guide/en/logstash/2.4/plugins-filters-grok.html
+    grok {
+      # This will create a new field called SYSLOGMESSAGE, that contains the 
+      # data part of a syslog line.
+      #
+      # If given a line like:
+      # Sep  9 19:09:50 ip-192-0-2-153 dhclient: bound to 192.0.2.153 -- renewal in 1367 seconds.
+      # SYSLOGMESSAGE will equal "bound to 192.0.2.153 -- renewal in 1367 seconds."
+      #
+      match => {
+        "message" => "%{SYSLOGBASE}%{SPACE}%{GREEDYDATA:SYSLOGMESSAGE}"
+      }
+    }
+  }
+}

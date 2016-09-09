@@ -1,0 +1,23 @@
+filter {
+  # This says, only do this parsing on events having the 'apache' tag.
+  if [type] == "apache" {
+    # Because there isn't a stand-alone parser for Apache logs, we have to build one
+    # ourselves. This requires grok.
+    # Documentation: https://www.elastic.co/guide/en/logstash/2.4/plugins-filters-grok.html
+    grok {
+      match => {
+        "message" => "%{COMBINEDAPACHELOG}"
+      }
+    }
+  }
+  # The 'COMBINEDAPACHELOG' and 'HTTPD24_ERRORLOG' are patterns that ship with logstash.
+  # You can see their defines here: 
+  # https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L96-L98
+  if [type] == "apache-error" {
+    grok {
+      match => {
+        "message" => "%{HTTPD24_ERRORLOG}"
+      }
+    }
+  }
+}

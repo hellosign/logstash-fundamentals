@@ -1,0 +1,23 @@
+input {
+  # This uses the 'file' input to deal with Apache logs. The documentation is
+  # here: https://www.elastic.co/guide/en/logstash/2.4/plugins-inputs-file.html
+  # Parsing of these will happen in the 'filter' stage. This is where the magic
+  # happens, turning strings into searchable fields.
+  #
+  # Tags are added to better allow us to filter events later in the pipeline.
+  #
+  file {
+    path => [
+      "/var/log/apache2/access.log",
+      "/var/log/apache2/other_vhosts_access.log",
+      "/var/log/apache2/vhosts/*.log"
+    ]
+    type => "apache"
+  }
+  file {
+    path => [
+      "/var/log/apache2/error.log"
+    ]
+    type => "apache-error"
+  }
+}
