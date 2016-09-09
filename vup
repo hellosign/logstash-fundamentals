@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ -f /etc/lsb-release ]; then
+  . /etc/lsb-release
+  UBU_RELEASE=$DISTRIB_CODENAME
+else
+  UBU_RELEASE='trusty'
+fi
+
+if [ -f /root/puppet_upgraded ]; then
+  echo "Puppet already upgraded, skipping to next provisioner."
+  exit 0
+else
+  echo "Setting up Puppetlabs repo."
+  echo "# Puppetlabs products
+deb http://apt.puppetlabs.com ${UBU_RELEASE} main
+deb-src http://apt.puppetlabs.com ${UBU_RELEASE} main
+
+# Puppetlabs dependencies
+deb http://apt.puppetlabs.com ${UBU_RELEASE} dependencies
+deb-src http://apt.puppetlabs.com ${UBU_RELEASE} dependencies
+" > /etc/apt/sources.list.d/puppetlabs.list
+
+  curl -s http://apt.puppetlabs.com/pubkey.gpg | apt-key add -
+  apt-get update -q
+  # The following should track whatever is in:
+  # https://github.com/HelloFax/hellosign-packer/blob/master/puppet-bootstrap.sh
+  apt-get install -q puppet-common hiera facter -y
+  touch /root/puppet_upgraded
+fi
+
