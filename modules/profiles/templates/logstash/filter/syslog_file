@@ -1,3 +1,4 @@
+# From modules/profiles/templates/logstash/filter/syslog_file
 filter {
   if [type] == "syslog-file" {
     # Syslog parsing is handled through Grok.

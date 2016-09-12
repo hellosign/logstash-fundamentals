@@ -1,3 +1,4 @@
+# From modules/profiles/templates/logstash/input/nasa_feeds
 <%- if @twitter_consumer_key == false -%>
 # input {
 #   # To get these strings, go here: https://dev.twitter.com/apps/new

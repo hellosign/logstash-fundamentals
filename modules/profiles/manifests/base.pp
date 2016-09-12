@@ -15,8 +15,8 @@ class profiles::base {
     }
   }
 
-  file { [ "/home/${vm_user}/.bash_aliases",
-           "/root/.bash_aliases" ]:
+  file { [  "/home/${vm_user}/.bash_aliases",
+            '/root/.bash_aliases' ]:
     owner   => $vm_user,
     group   => $vm_user,
     mode    => '0640',

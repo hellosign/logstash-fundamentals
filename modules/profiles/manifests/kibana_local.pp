@@ -5,7 +5,7 @@ class profiles::kibana_local {
     manage_repo => true,
     config      => {
       'server.port' => 3010
-    } 
+    }
   }
 
 }

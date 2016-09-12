@@ -6,6 +6,10 @@ class profiles::logstash (
   $ls_heap = '256m'
 ) {
 
+  include profiles::elastic_key
+
+  ensure_packages ( 'openjdk-7-jre-headless', { require => Exec['apt_update'] } )
+
   if $run_as_root {
     $ls_user  = 'root'
     $ls_group = 'root'
@@ -27,10 +31,22 @@ class profiles::logstash (
     'LS_HEAP_SIZE' => $ls_heap
   }
 
+  apt::source { 'logstash':
+    location => 'http://packages.elasticsearch.org/logstash/2.4/debian',
+    release  => 'stable',
+    repos    => 'main',
+    include  => {
+      'src' => false
+    },
+    require  => Apt::Key['elastic'],
+    notify   => Exec['apt_update']
+  }
+
   class { '::logstash':
-    manage_repo   => true,
+    manage_repo   => false,
     repo_version  => '2.4',
-    init_defaults => $config_hash
+    init_defaults => $config_hash,
+    require       => Exec['apt_update']
   }
 
 }

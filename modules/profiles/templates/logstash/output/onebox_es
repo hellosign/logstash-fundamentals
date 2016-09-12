@@ -1,3 +1,4 @@
+# From modules/profiles/templates/logstash/output/onebox_es
 output {
   # Documented here: https://www.elastic.co/guide/en/logstash/current/plugins-outputs-elasticsearch.html
   #
