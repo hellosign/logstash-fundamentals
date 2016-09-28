@@ -87,3 +87,24 @@ for use later on and to ease finding the event in reporting.
 * `backup_message`: Unable to isolate framulator, backup not taken.
 * `tags`: [ "backup_output" ]
 * `type`: syslog
+ 
+---
+
+With fields defined in this way, we can use them for outputs:
+```perl
+output {
+  if "backup_output" in [tags] AND [backup_state] != "OK" {
+    pagerduty {
+      service_key => "secrets"
+      event_type => "trigger"
+      incident_key => "logstash/%{backup_name}/%{backup_state}"
+      description => "Backup failure on %{backup_name}. RPO is not being met."
+      details => "%{backup_state}: %{backup_message}"
+    }
+  }
+}
+```
+Which will issue a PagerDuty incident in the event of a failed backup. The
+fields we populated in the grok expression are used to provide information in the
+incident. This usage would be much harder if we had to extract the text we wanted
+from within large fields.
