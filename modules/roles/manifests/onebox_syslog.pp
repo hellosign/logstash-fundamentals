@@ -25,6 +25,8 @@ class roles::onebox_syslog {
 
   include profiles::logstash::output_onebox
   include profiles::logstash::input_syslog_server
+  include profiles::logstash::input_syslog_file
+  include profiles::logstash::filter_syslog_file
 
   # Next, set up Kibana.
 

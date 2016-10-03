@@ -1,6 +1,6 @@
 # From modules/profiles/templates/logstash/filter/syslog_file
 filter {
-  if [type] == "syslog-file" {
+  if [type] == "syslog-files" {
     # Syslog parsing is handled through Grok.
     # Documentation: https://www.elastic.co/guide/en/logstash/2.4/plugins-filters-grok.html
     grok {
@@ -9,11 +9,29 @@ filter {
       #
       # If given a line like:
       # Sep  9 19:09:50 ip-192-0-2-153 dhclient: bound to 192.0.2.153 -- renewal in 1367 seconds.
-      # SYSLOGMESSAGE will equal "bound to 192.0.2.153 -- renewal in 1367 seconds."
+      # 'message' will equal "Sep  9 19:09:50 ip-192-0-2-153 dhclient: bound to 192.0.2.153 -- renewal in 1367 seconds."
+      # 'SYSLOGMESSAGE' will equal "bound to 192.0.2.153 -- renewal in 1367 seconds."
+      # 'timestamp' will equal "Sep  9 19:09:50"
+      # 'logsource' will equal "ip-192-0-2-153"
+      # 'program' will equal "dhclient"
       #
       match => {
-        "message" => "%{SYSLOGBASE}%{SPACE}%{GREEDYDATA:SYSLOGMESSAGE}"
+        "message" => "^%{SYSLOGBASE}%{SPACE}%{GREEDYDATA:SYSLOGMESSAGE}$"
       }
+    }
+  }
+  if [type] == "syslog-files" and "_grokparsefailure" not in [tags] {
+    # This replaces 'message' with the contents of 'SYSLOGMESSAGE', but only if 
+    # the grok statement just above actually worked.
+    # After this filter, the fields will be:
+    # 'message' will equal "bound to 192.0.2.153 -- renewal in 1367 seconds."
+    # 'timestamp' will equal "Sep  9 19:09:50"
+    # 'logsource' will equal "ip-192-0-2-153"
+    # 'program' will equal "dhclient"
+    # And SYSLOGMESSAGE will not be present at all.
+    mutate {
+      replace      => { "message" => "%{SYSLOGMESSAGE}" }
+      remove_field => [ "SYSLOGMESSAGE" ]
     }
   }
 }
