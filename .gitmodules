@@ -38,6 +38,11 @@
         path = modules/apache
         url = https://github.com/puppetlabs/puppetlabs-apache.git
         branch = 1.10.0
-[submodule "redis"]
+[submodule "modules/redis"]
 	path = modules/redis
-	url = https://github.com/arioch/puppet-redis.git
+        url = https://github.com/arioch/puppet-redis.git
+        branch = 1.2.3
+[submodule "modules/inifile"]
+	path = modules/inifile
+	url = https://github.com/puppetlabs/puppetlabs-inifile.git
+        branch = 1.6.0
