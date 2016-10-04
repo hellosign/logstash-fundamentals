@@ -55,10 +55,22 @@ filter {
         "message" => "%{SYSLOGBASE}%{SPACE}%{GREEDYDATA:SYSLOGMESSAGE}"
       }
     }
+    
+    # Turn the log timestamp into a true event timestamp.
+    date {
+      match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
   }
   
   # App-logs are already formatted thanks to JSON, so much less grokking.
   # But we still have to do a few things.
+  
+  # Parse the timestamp in the network inputs.
+  if [type] == "applog" OR [type] == "controllog" {
+    date {
+      match => [ "info.timestamp", "ISO8601" ]
+    }
+  }
   
   # Like drop the debug lines in the info feeds.
   if [type] == "applog" AND [info][message] =~ "^DEBUG:" {
