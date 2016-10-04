@@ -1,8 +1,10 @@
 # Sets up the logstash environment for an Apache server, outputting
-# to an ElasticSearch box somewhere off-box.
-class roles::apache_es {
+# to a variety of things, based on environment.
+class roles::apache {
 
   include profiles::base
+  include profiles::apache_stub
+  include profiles::kibana_network
 
   # Running as root to read the syslog file.
   # However, if you add the 'logstash' user to the 'adm' group,
@@ -15,6 +17,10 @@ class roles::apache_es {
   include profiles::logstash::input_apache
   include profiles::logstash::filter_syslog_file
   include profiles::logstash::filter_apache
-  include profiles::logstash::output_direct_es
+  case $::env_type {
+    'small':  { include profiles::logstash::output_escluster }
+    'medium': { include profiles::logstash::output_redis }
+    default:  { include profiles::logstash::output_escluster }
+  }
 
 }

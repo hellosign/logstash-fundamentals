@@ -1,0 +1,16 @@
+# From modules/profiles/templates/logstash/input/redis
+input {
+  # Documented here: https://www.elastic.co/guide/en/logstash/2.4/plugins-inputss-redis.html
+  #
+  # This reads events off of the 'medium_cluster' list on the locally installed
+  # 'redis' server. They are placed there by shipper nodes processing jobs. In
+  # larger environments, the 'batch_count' attribute is used to pull more jobs off
+  # of the redis server and reduce load on it.
+  redis {
+    host        => [ "<%= @redis_ip %>" ]
+    data_type   => "list"
+    codec       => "json"
+    key         => "medium_cluster"
+    batch_count => 50
+  }
+}

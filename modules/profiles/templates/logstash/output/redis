@@ -1,0 +1,17 @@
+# From modules/profiles/templates/logstash/output/redis
+output {
+  # Documented here: https://www.elastic.co/guide/en/logstash/2.4/plugins-outputs-redis.html
+  #
+  # Outputs to the redis-server for processing by the parser nodes.
+  # 
+  # For production usage, consider setting batch, batch_event, and batch_timeout
+  # to take advantage of bulk updates. It add some latency to your log pipeline,
+  # but it takes load off of the redis node.
+  redis {
+    host      => [ "<%= @redis_ip %>" ]
+    data_type => "list"
+    codec     => "json"
+    key       => "medium_cluster"
+  }
+
+}
