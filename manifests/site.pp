@@ -7,6 +7,7 @@ node default {
     'onebox_syslog': { include roles::onebox_syslog }
     'apache':        { include roles::apache }
     'escluster':     { include roles::escluster }
+    'mdcluster':     { include roles::mdcluster }
   }
 
 }
