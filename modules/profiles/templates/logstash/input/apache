@@ -1,3 +1,4 @@
+# From modules/profiles/templates/logstash/input/apache
 input {
   # This uses the 'file' input to deal with Apache logs. The documentation is
   # here: https://www.elastic.co/guide/en/logstash/2.4/plugins-inputs-file.html

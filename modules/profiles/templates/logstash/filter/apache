@@ -1,3 +1,4 @@
+# From modules/profiles/templates/logstash/filter/apache
 filter {
   # This says, only do this parsing on events having the 'apache' tag.
   if [type] == "apache" {
@@ -6,7 +7,7 @@ filter {
     # Documentation: https://www.elastic.co/guide/en/logstash/2.4/plugins-filters-grok.html
     grok {
       match => {
-        "message" => "%{COMBINEDAPACHELOG}"
+        "message" => "^%{COMBINEDAPACHELOG}"
       }
     }
   }
@@ -16,7 +17,46 @@ filter {
   if [type] == "apache-error" {
     grok {
       match => {
-        "message" => "%{HTTPD24_ERRORLOG}"
+        "message" => "^%{HTTPD24_ERRORLOG}"
+      }
+    }
+  }
+  if [type] == "apache" {
+    # I renamed my comment-file ages ago. Anything going to mt-comment is a comment-spam bot.
+    if [request] == "/cgi-bin/mt/mt-comments.cgi" {
+      mutate {
+        add_field => {
+          "is_spam" => true
+          "blog_target" => "comment-spam"
+        }
+      }
+    }
+    # Flag traffic going to the old blog.
+    if [request] =~ "^\/blog" {
+      mutate {
+        add_field => { "blog_target" => "blogger" }
+      }
+    # Flag traffic going to the new blog.
+    } else if [request] =~ "^\/mt\/blog" {
+      mutate {
+        add_field => { "blog_target" => "movabletype" }
+      }
+    # Flag traffic linking directly from images.
+    } else if [request] =~ "^\/images" {
+      mutate {
+        add_field => { "blog_target" => "images" }
+      }
+    }
+
+    # Set the timestamp of the event to the one in the Apache logs.
+    date {
+      match => ["timestamp", "dd/MMM/YYYY:HH:mm:ss Z"]
+    }
+
+    # if we got this far, it isn't spam.
+    if [is_spam] != "true" {
+      mutate {
+        add_field => { "is_spam" => "false" }
       }
     }
   }

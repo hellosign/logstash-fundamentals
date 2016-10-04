@@ -15,10 +15,16 @@ class roles::apache {
 
   include profiles::logstash::input_syslog_file
   include profiles::logstash::input_apache
-  include profiles::logstash::filter_syslog_file
-  include profiles::logstash::filter_apache
+
+  # Change our behavior based on environment.
+  # Small:  Parse locally, send to ElasticSearch.
+  # Medium: Input locally, send to Redis, parse later.
   case $::env_type {
-    'small':  { include profiles::logstash::output_escluster }
+    'small':  {
+      include profiles::logstash::filter_syslog_file
+      include profiles::logstash::filter_apache
+      include profiles::logstash::output_escluster
+     }
     'medium': { include profiles::logstash::output_redis }
     default:  { include profiles::logstash::output_escluster }
   }
