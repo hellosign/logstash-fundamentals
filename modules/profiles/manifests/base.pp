@@ -23,4 +23,12 @@ class profiles::base {
     content => template('profiles/base/bash_aliases'),
   }
 
+  # Provide vim syntax hilighting for classes.
+  file { '/usr/share/vim/vim74/syntax/hcl.vim':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/profiles/base/hcl.vim',
+  }
+
 }
