@@ -1,10 +1,10 @@
 # From modules/profiles/templates/logstash/filter/syslog_file
 filter {
-  if [type] == "syslog-files" {
+  if [type] =~ "^syslog" {
     # Syslog parsing is handled through Grok.
     # Documentation: https://www.elastic.co/guide/en/logstash/2.4/plugins-filters-grok.html
     grok {
-      # This will create a new field called SYSLOGMESSAGE, that contains the 
+      # This will create a new field called SYSLOGMESSAGE, that contains the
       # data part of a syslog line.
       #
       # If given a line like:
@@ -20,8 +20,8 @@ filter {
       }
     }
   }
-  if [type] == "syslog-files" and "_grokparsefailure" not in [tags] {
-    # This replaces 'message' with the contents of 'SYSLOGMESSAGE', but only if 
+  if [type] =~ "^syslog" and "_grokparsefailure" not in [tags] {
+    # This replaces 'message' with the contents of 'SYSLOGMESSAGE', but only if
     # the grok statement just above actually worked.
     # After this filter, the fields will be:
     # 'message' will equal "bound to 192.0.2.153 -- renewal in 1367 seconds."

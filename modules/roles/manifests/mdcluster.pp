@@ -20,7 +20,7 @@ class roles::mdcluster {
   include profiles::logstash::input_syslog_file
 
   # Include appropriate filters for all that we do.
-  include profiles::logstash::filter_syslog_file
+  include profiles::logstash::filter_syslog
   include profiles::logstash::filter_apache
   # Since this IS the ES box, output to itself.
   include profiles::logstash::output_escluster

@@ -21,7 +21,7 @@ class roles::apache {
   # Medium: Input locally, send to Redis, parse later.
   case $::env_type {
     'small':  {
-      include profiles::logstash::filter_syslog_file
+      include profiles::logstash::filter_syslog
       include profiles::logstash::filter_apache
       include profiles::logstash::output_escluster
      }
