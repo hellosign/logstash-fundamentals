@@ -12,7 +12,7 @@ class roles::escluster {
   }
 
   include profiles::logstash::input_syslog_file
-  include profiles::logstash::filter_syslog_file
+  include profiles::logstash::filter_syslog
   # Since this IS the ES box, output to itself.
   include profiles::logstash::output_escluster
 
