@@ -138,3 +138,8 @@ filter {
 This version avoids dictionaries all together, and uses conditionals to ensure
 that each grok-expression is only matched against a string that is highly
 likely to match.
+
+## Skipping to the end to see what the closing paragraph is
+
+1. Use regex-anchors. `^` and `$` will give you the biggest bang for your performance optimization time.
+2. Tiering your matches lets you group filter-statements on a component in ways that are easier for a group to maintain.
