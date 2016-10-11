@@ -37,7 +37,9 @@ log-lines will get missed several times before getting matched.
 
 This is terse, and shows your intent. However, it's *really bad*.
 
-The above can be made to perform much better without modifying the log-format:
+The above can be made to perform much better without modifying the log-format.
+At the very least, move the prefix in each capture to it's own expression, and
+grok on the remaining ones in a later dictionary:
 
 ```perl
 filter {
@@ -79,8 +81,23 @@ dictionaries, the grok expressions are now anchored (see the `^` and `$`
 characters) which will improve performance. Also, we use conditional statements
 to avoid grok-parsing lines against patterns we already know won't match.
 
-After the work to convert to grok-ready log-statements, we can do away
-with dictionaries entirely:
+If we move towards grok-ready logging statements, we can make these:
+```
+Created account #{x} in zone #{y} with email #{z}
+Account #{x} deleted from zone #{y}
+Suspended zone #{y} account #{x} for #{s}
+Created new zone #{y}
+Zone #{y} deleted
+```
+Into these easier to parse versions:
+```
+[account] Created account #{x} in zone #{y} with email #{z}
+[account] Deleted account #{x} in zone #{y}
+[account] Suspended account #{x} in zone #{y} for #{s}
+[zone] Created #{y}
+[zone] Deleted #{y}
+```
+Which means we can do away with dictionaries entirely:
 
 ```perl
 filter {
@@ -142,4 +159,4 @@ likely to match.
 ## Skipping to the end to see what the closing paragraph is
 
 1. Use regex-anchors. `^` and `$` will give you the biggest bang for your performance optimization time.
-2. Tiering your matches lets you group filter-statements on a component in ways that are easier for a group to maintain.
+2. Tiering your matches lets you group filter-statements on a component in ways that are easier for an engineering group to maintain.
