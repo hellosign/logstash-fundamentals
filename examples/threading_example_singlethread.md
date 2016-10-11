@@ -3,7 +3,7 @@ In this example logstash config, little care has been taken for the threading
 model. Compare it to 
 [the parallelized version](examples/threading_example_parallel.md).
 
-```perl
+```ruby
 input {
   file {
     path => [

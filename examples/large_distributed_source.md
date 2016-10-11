@@ -2,7 +2,7 @@
 This example configuration shows what a logstash configuration on a log-producing
 node might look like in a large, distributed environment.
 
-```perl
+```ruby
 input {
   file {
     paths => [ "/var/log/syslog" ]

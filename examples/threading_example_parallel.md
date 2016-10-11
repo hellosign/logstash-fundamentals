@@ -3,7 +3,7 @@ In this example logstash config, care has been taken to ensure that
 multiple threads can be used for maximum throughput. Compare it to
 [the singlethreaded version](examples/threading_example_singlethread.md).
 
-```perl
+```ruby
 input {
   file {
     path => [ '/var/log/applogs/*.log' ]

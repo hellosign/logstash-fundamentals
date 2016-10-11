@@ -1,7 +1,7 @@
 # A Filter Example with Multiple Filter Blocks.
 In this example, we have two `filter { }` blocks, which manipulate similar fields.
 
-```perl
+```ruby
 # Parse an authentication header and get details
 filter {
   if [message] =~ "Authentication_request" {

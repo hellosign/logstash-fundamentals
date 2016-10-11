@@ -6,7 +6,7 @@ to work with.
 
 It all begins with syslog parsing. This is taken from [one of the filters we use in vagrant builds](modules/profiles/templates/logstash/filter/syslog_file)
 
-```perl
+```ruby
 filter {
   if [type] == "syslog-file" {
     # Syslog parsing is handled through Grok.
@@ -51,13 +51,13 @@ Remember, you can name your fields by using either `%{PATTERN:field_name}` or
 latter, if you're building your own regex.
 
 A simple capture for these events could be this:
-```perl
+```ruby
 %{WORD:backup_state} %{GREEDYDATA:backup_message}
 ```
 It's not all that efficient, but it gets the job done. However, the internal
 standard for backup-output has only a few states defined. A more targeted capture
 would look like this:
-```perl
+```ruby
 (?<backup_state>OK|WARN|ALARM|CRIT) %{GREEDYDATA:backup_message}
 ```
 We can now start building our Grok expression.
@@ -65,7 +65,7 @@ We can now start building our Grok expression.
 For best efficiency, we need to place this Grok expression *after* the above expression.
 This allows us to filter on a specific field and reduce the per-cycle computational
 overhead. Since we know all of our backup scripts end with "-backup":
-```perl
+```ruby
 if [program] =~ "-backup$" {
   grok {
     match => {
@@ -91,7 +91,7 @@ for use later on and to ease finding the event in reporting.
 ---
 
 With fields defined in this way, we can use them for outputs:
-```perl
+```ruby
 output {
   if "backup_output" in [tags] AND [backup_state] != "OK" {
     pagerduty {

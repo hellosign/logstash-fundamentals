@@ -2,7 +2,7 @@
 This example configuration shows what the logstash routing-tier could look
 like in an environment that has a routing tier.
 
-```perl
+```ruby
 input {
   kafka {
     zk_connect => "keeper1.devops.internal:9092,keeper2.devops.internal:9092"

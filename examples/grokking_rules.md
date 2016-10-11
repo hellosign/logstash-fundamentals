@@ -12,7 +12,7 @@
 
 Don't do this:
 
-```perl
+```ruby
 filter {
   if [type] == "applog"
     grok {
@@ -41,7 +41,7 @@ The above can be made to perform much better without modifying the log-format.
 At the very least, move the prefix in each capture to it's own expression, and
 grok on the remaining ones in a later dictionary:
 
-```perl
+```ruby
 filter {
   if [type] == "applog"
     grok {
@@ -99,7 +99,7 @@ Into these easier to parse versions:
 ```
 Which means we can do away with dictionaries entirely:
 
-```perl
+```ruby
 filter {
   if [type] == "applog"
     grok {

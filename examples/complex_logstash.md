@@ -4,7 +4,7 @@ and outputting it to two different sources. This example includes some organic
 cruft! Like a real, live config-file would.
 
 
-```perl
+```ruby
 # Pull in syslog data
 input {
   file {
