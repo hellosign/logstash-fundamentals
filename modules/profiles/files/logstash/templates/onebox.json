@@ -62,6 +62,13 @@
             }
           }
         },
+        "user_mentions" : {
+          "properties" : {
+            "id" : {
+              "type": "integer"
+            }
+          }
+        },
         "@version" : {
           "index" : "not_analyzed",
           "type" : "string"
