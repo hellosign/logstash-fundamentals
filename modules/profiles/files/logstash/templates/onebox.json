@@ -1,0 +1,78 @@
+{
+  "template" : "onebox-*",
+  "settings" : {
+    "index" : {
+      "refresh_interval" : "5s"
+    }
+  },
+  "mappings" : {
+    "_default_" : {
+      "dynamic_templates" : [ {
+        "message_field" : {
+          "mapping" : {
+            "index" : "analyzed",
+            "omit_norms" : true,
+            "fielddata" : {
+              "format" : "disabled"
+            },
+            "type" : "string"
+          },
+          "match_mapping_type" : "string",
+          "match" : "message"
+        }
+      }, {
+        "string_fields" : {
+          "mapping" : {
+            "index" : "analyzed",
+            "omit_norms" : true,
+            "fielddata" : {
+              "format" : "disabled"
+            },
+            "type" : "string",
+            "fields" : {
+              "raw" : {
+                "index" : "not_analyzed",
+                "ignore_above" : 256,
+                "type" : "string"
+              }
+            }
+          },
+          "match_mapping_type" : "string",
+          "match" : "*"
+        }
+      } ],
+      "properties" : {
+        "@timestamp" : {
+          "type" : "date"
+        },
+        "geoip" : {
+          "dynamic" : true,
+          "properties" : {
+            "location" : {
+              "type" : "geo_point"
+            },
+            "longitude" : {
+              "type" : "float"
+            },
+            "latitude" : {
+              "type" : "float"
+            },
+            "ip" : {
+              "type" : "ip"
+            }
+          }
+        },
+        "@version" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        }
+      },
+      "_all" : {
+        "enabled" : true,
+        "omit_norms" : true
+      }
+    }
+  },
+  "aliases" : { }
+}
+

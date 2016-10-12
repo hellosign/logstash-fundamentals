@@ -7,8 +7,10 @@ output {
   # "onebox" and rotating daily.
   #
   elasticsearch {
-    hosts => [ "127.0.0.1" ]
-    index => "onebox-%{+YYYY.MM.dd}"
-    manage_template => true
+    hosts              => [ "127.0.0.1" ]
+    index              => "onebox-%{+YYYY.MM.dd}"
+    template           => "/etc/logstash/logstash.json"
+    manage_template    => true
+    template_overwrite => true
   }
 }
