@@ -38,26 +38,10 @@ class roles::onebox_syslog {
   include profiles::curator
 
   # Remove onebox indexes older than a week.
-  curator::job { 'onebox_delete':
-    command     => 'delete',
-    prefix      => 'onebox-',
-    older_than  => '7',
-    cron_hour   => '03',
-    cron_minute => '05',
+  profiles::curator_job { 'onebox_delete':
+    jobfile     => template('profiles/curator/onebox_delete.yml'),
+    cron_hour   => '3',
+    cron_minute => '5',
   }
-
-  # This is what a weekly index would look like.
-  # We're not using it here, this is just for example.
-  # curator::job { 'onebox_delete_weekly':
-  #   command      => 'delete',
-  #   prefix       => 'onebox-',
-  #   timestring   => '\%G.\%V',
-  #   time_unit    => 'weeks',
-  #   older_than   => '2',
-  #   cron_hour    => 1,
-  #   cron_minute  => 02,
-  #   cron_weekday => 3,
-  # }
-  # WARNING: curator uses python strftime for timestring, not joba!
 
 }

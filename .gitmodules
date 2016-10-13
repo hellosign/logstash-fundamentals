@@ -5,7 +5,7 @@
 [submodule "modules/stdlib"]
 	path = modules/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
-	branch = releases/tag/4.12.0
+	branch = releases/tag/4.13.0
 [submodule "modules/apt"]
 	path = modules/apt
 	url = https://github.com/puppetlabs/puppetlabs-apt.git

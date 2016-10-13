@@ -1,0 +1,16 @@
+actions:
+  1:
+    action: delete_indices
+    description: Remove old indices
+    filters:
+      - filtertype: pattern
+        kind: prefix
+        value: onebox-
+      - filtertype: age
+        source: name
+        direction: older
+        timestring: '%Y.%m.%d'
+        unit: days
+        unit_count: 7
+
+      

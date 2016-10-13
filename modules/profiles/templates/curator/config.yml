@@ -1,0 +1,12 @@
+client:
+  hosts:
+    - <%= @elastic_host %>
+  port: 9200
+  use_ssl: False
+  timeout: 30
+  master_only: False
+
+logging:
+  loglevel: INFO
+  logfile: /var/log/curator.log
+  logformat: json
