@@ -39,7 +39,7 @@ rotates weekly, not daily.
 actions:
   1:
     action: snapshot
-    description: Hourly snapshot of the audit index
+    description: "Hourly snapshot of the audit index"
     options:
       repository: logstash_backup
       name: houraudit-%Y%m%d%H
@@ -52,7 +52,7 @@ actions:
         value: 'audit-'
   2:
     action: delete_snapshot
-    description: Remove old hourly snapshots of the audit index
+    description: "Remove old hourly snapshots of the audit index"
     options:
       repository: logstash_backup
     filters:
@@ -72,7 +72,7 @@ a seven year retention period (ick), there is no snapshot-removal step.
 actions:
   1:
     action: snapshot
-    description: Snapshot the last-week index for audit
+    description: "Snapshot the last-week index for audit"
     options:
       repository: logstash_backup
       name: audit-%G.%V
@@ -97,3 +97,26 @@ These would be launched through cron. The executions would look something like:
 /usr/local/bin/curator --config /etc/curator/curator.yml /etc/curator/snap_audit-hourly.yml
 /usr/local/bin/curator --config /etc/curator/curator.yml /etc/curator/snap_audit-weekly.yml
 ```
+
+## Restoring those snapshots
+You can restore with curator as well! Here is an example of restoring from
+the most recent hourly backup of that audit index. It's smart enough to
+know that you want the 'most recent' unless told otherwise.
+
+```yaml
+actions:
+  1:
+    action: restore
+    description: "Restore the most recent 'audit' snapshot."
+    options:
+      repository: logstash-backup
+      partial: False
+    filters:
+      - filtertype: pattern
+        kind: prefix
+        value: 'houraudit-'
+      - filtertype: state
+        state: SUCCESS
+```
+You can set this yaml file somewhere for use in your disaster-recovery
+runbooks.
