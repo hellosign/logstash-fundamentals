@@ -1,3 +1,4 @@
+# From modules/profiles/templates/logstash/input/journald
 input {
   # This is not a bundled plugin. You will have to install it yourself.
   # It's listed as a proof-of-concept, so be careful of quality.

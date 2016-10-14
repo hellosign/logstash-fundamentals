@@ -2,6 +2,7 @@
 <%- if @twitter_consumer_key == false -%>
 # input {
 #   # To get these strings, go here: https://dev.twitter.com/apps/new
+#   # Then update the puppet-hiera/node-type/onebox_nasa.yaml
 #   # See also: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-twitter.html
 #   twitter {
 #     consumer_key => 'string'
