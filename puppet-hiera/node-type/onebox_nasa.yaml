@@ -1,0 +1,11 @@
+---
+# To make the twitter demo work, you will need your own twitter API
+# credentials: https://apps.twitter.com/app/new
+logstash::twitter:
+  consumer_key: false
+  consumer_secret: false
+  oauth_token: false
+  oauth_token_secret: false
+  keywords:
+    - nasa
+    - LISA16

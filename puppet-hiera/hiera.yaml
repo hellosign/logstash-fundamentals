@@ -1,0 +1,12 @@
+---
+:hierarchy:
+  - "node-type/%{node_type}"
+  - "env-type/%{env_type}"
+  - common
+:backends:
+  - yaml
+:yaml:
+  :datadir: '.'
+
+---
+:merge_behavior: deeper

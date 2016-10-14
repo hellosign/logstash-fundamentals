@@ -1,0 +1,4 @@
+logstash:
+  twitter:
+    follows:
+      - evil
