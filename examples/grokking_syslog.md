@@ -58,7 +58,7 @@ It's not all that efficient, but it gets the job done. However, the internal
 standard for backup-output has only a few states defined. A more targeted capture
 would look like this:
 ```ruby
-(?<backup_state>OK|WARN|ALARM|CRIT) %{GREEDYDATA:backup_message}
+^(?<backup_state>OK|WARN|ALARM|CRIT) %{GREEDYDATA:backup_message}$
 ```
 We can now start building our Grok expression.
 
@@ -69,15 +69,15 @@ overhead. Since we know all of our backup scripts end with "-backup":
 if [program] =~ "-backup$" {
   grok {
     match => {
-      "SYSLOGMESSAGE" => "(?<backup_state>OK|WARN|ALARM|CRIT) %{GREEDYDATA:backup_message}"
-      "program" => "%{GREEDYDATA:backup_name}-backup"
+      "SYSLOGMESSAGE" => "^(?<backup_state>OK|WARN|ALARM|CRIT) %{GREEDYDATA:backup_message}$"
+      "program" => "^%{DATA:backup_name}-backup$"
     }
     add_tag => [ "backup_output" ]
   }
 }
 ```
 The conditional looks for strings ending with `-backup`, and then applies the
-grok expression to it. We use two matches; one on `SYSLOGMESSAGES` to pull out the
+grok expression to it. We use two matches; one on `SYSLOGMESSAGE` to pull out the
 `backup_state` and `backup_message` fields, and a second on the `program` field
 to pull out the `backup_name` field. Finally, we tag the event with `backup_output`
 for use later on and to ease finding the event in reporting.
