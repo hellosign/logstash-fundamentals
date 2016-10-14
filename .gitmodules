@@ -30,10 +30,6 @@
         path = modules/kibana4
         url = https://github.com/lesaux/puppet-kibana4.git
         branch = v1.0.17
-[submodule "modules/curator"]
-        path = modules/curator
-        url = https://github.com/jlambert121/jlambert121-curator.git
-        branch = 2.3.1
 [submodule "modules/apache"]
         path = modules/apache
         url = https://github.com/puppetlabs/puppetlabs-apache.git
