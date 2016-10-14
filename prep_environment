@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+# This script preps the repo for use as a teaching tool.
+
+echo "Checking out submodules"
+git submodule init
+git submodule update
+if [ ! -d ../puppet-hiera && -d ./puppet-hiera ]; then
+  echo "Setting up puppet-hiera directory."
+  cp -a puppet-hiera ../
+elif [ ! -f ../puppet-hiera/common.yaml ]; then
+  echo "It seems ../puppet-hiera exists, and doesn't have the right files."
+  echo "It should contain the contents of ./puppet-hiera."
+fi
