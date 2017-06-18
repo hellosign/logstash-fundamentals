@@ -5,30 +5,21 @@ class profiles::onebox_es (
 
   include profiles::elastic_key
 
-  ensure_packages ( 'openjdk-7-jre-headless', {
+  ensure_packages ( 'openjdk-8-jre-headless', {
     require => Exec['apt_update'],
   } )
 
-  # Install ElasticSearch repo, because the elasticsearch module doesn't do
-  # a good job of that.
-  apt::source { 'elasticsearch':
-    ensure   => present,
-    location => "http://packages.elastic.co/elasticsearch/2.x/debian",
-    release  => 'stable',
-    repos    => 'main',
-    include  => {
-      'source' => false
-    },
-    require  => Apt::Key['elastic'],
-    notify   => Exec['apt_update']
-  }
-
   # Installs the elasticsearch base install, but not an instance.
   class { 'elasticsearch':
+    version      => '5.4.1',
     manage_repo  => false,
-    repo_version => '2.x',
+    repo_version => '5.x',
     api_host     => 'localhost',
     api_protocol => 'http',
+    jvm_options  => [
+      '-Xms512m',
+      '-Xmx512m'
+    ],
     require      => Exec['apt_update'],
   }
 

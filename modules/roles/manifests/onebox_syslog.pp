@@ -14,7 +14,7 @@ class roles::onebox_syslog {
   }
 
   # We need java, this gets it.
-  ensure_packages ( 'openjdk-7-jre-headless', { require => Exec['apt_update'] } )
+  ensure_packages ( 'openjdk-8-jre-headless', { require => Exec['apt_update'] } )
 
   ## Next, set up logstash. Note the use of the 'require'.
   #  Unlike onebox_nasa, we need to run as root in order to bind

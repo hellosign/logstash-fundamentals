@@ -6,4 +6,16 @@ class profiles::elastic_key {
       source => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch'
   }
 
+  apt::source { 'elasticsearch':
+    ensure   => present,
+    location => "https://artifacts.elastic.co/packages/5.x/apt",
+    release  => 'stable',
+    repos    => 'main',
+    include  => {
+      'source' => false
+    },
+    require  => Apt::Key['elastic'],
+    notify   => Exec['apt_update']
+  }
+
 }
