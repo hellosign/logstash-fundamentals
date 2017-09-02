@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.2.1 [2017-09-02]
+
+#### Release Notes
+This is mostly a documentation update. No significant technical changes.
+
+* Update examples under `examples/`
+
+## v0.2.0 [2017-06-18]
+
+#### Release Notes
+This updates the existing repository to support the following:
+
+* Puppet 4 for provisioning
+* Updated Vagrant provisioning to reflect the Puppet 4 changes
+* Update the base box used from Ubuntu 14.04 to Ubuntu 16.10
+* Update the ElasticSearch, LogStash, and Kibana versions to 2.4 to 5.4
+
 ## v0.1.0 [2016-10-16]
 
 #### Release Notes

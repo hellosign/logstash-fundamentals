@@ -1,9 +1,7 @@
 # Two Curator examples. A snapshot-yesterday example, and a snapshot-hourly.
 
-This takes advantage of the fact that this generates a crontab entry,
-and uses a bash call to figure out what yesterday's index would be
-named. That way you don't have to keep snapshotting the full history
-of indexes, just the one that just stopped changing.
+This uses a trick of filtering to figure out what 'yesterday' is, and snapshot
+that. Makes sure you're snapshotting a quiet index!
 ```yaml
 actions:
   1:
@@ -32,7 +30,7 @@ older than a day. Finally, we pull exactly one index out, which is the newest
 index in that list of old indexes.
 
 This next example, an hourly snapshot is taken of the 'audit' index, and
-a second job delete the old ones. To make it interesting, the 'audit' index
+a second job to delete the old ones. To make it interesting, the 'audit' index
 rotates weekly, not daily.
 
 ```yaml
@@ -42,7 +40,7 @@ actions:
     description: "Hourly snapshot of the audit index"
     options:
       repository: logstash_backup
-      name: houraudit-%Y%m%d%H
+      name: hraudit-%Y%m%d%H
     filters:
       - filtertype: pattern
         kind: timestring
@@ -114,7 +112,7 @@ actions:
     filters:
       - filtertype: pattern
         kind: prefix
-        value: 'houraudit-'
+        value: 'hraudit-'
       - filtertype: state
         state: SUCCESS
 ```

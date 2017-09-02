@@ -1,5 +1,5 @@
-# This role constructs an example LogStash box that pulls information from
-# various NASA twitter feeds. It contains:
+# This role constructs an example LogStash box that sets up a syslog-plugin
+# based logstash service. It contains:
 # - LogStash
 # - ElasticSearch
 # - Kibana
@@ -30,8 +30,7 @@ class roles::onebox_syslog {
 
   # Next, set up Kibana.
 
-  class { 'profiles::kibana_local':
-  }
+  class { 'profiles::kibana_local': }
 
   # Next, get Curator set up
 
