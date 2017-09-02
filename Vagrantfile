@@ -42,7 +42,8 @@ Vagrant.configure("2") do |config|
       puppet_common.call(puppet)
       puppet.facter = {
         "node_type"      => 'onebox_nasa',
-        "hostname"       => 'onebox_nasa'
+        "hostname"       => 'onebox_nasa',
+        "env_type"       => 'onebox'
       }
     end
     onebox_nasa.vm.provider :virtualbox do |vb|
@@ -63,7 +64,8 @@ Vagrant.configure("2") do |config|
       puppet_common.call(puppet)
       puppet.facter = {
         "node_type"      => 'onebox_syslog',
-        "hostname"       => 'onebox_syslog'
+        "hostname"       => 'onebox_syslog',
+        "env_type"       => 'onebox'
       }
     end
     onebox_syslog.vm.provider :virtualbox do |vb|
