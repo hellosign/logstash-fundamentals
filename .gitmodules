@@ -1,15 +1,15 @@
 [submodule "modules/elasticsearch"]
 	path = modules/elasticsearch
 	url = https://github.com/elastic/puppet-elasticsearch.git
-	branch = tag/5.2.0
+	branch = tag/5.4.3
 [submodule "modules/stdlib"]
 	path = modules/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
-	branch = releases/tag/4.17.0
+	branch = releases/tag/4.19.0
 [submodule "modules/apt"]
 	path = modules/apt
 	url = https://github.com/puppetlabs/puppetlabs-apt.git
-	branch = release/tag/4.0.0
+	branch = release/tag/4.1.0
 [submodule "modules/yum"]
 	path = modules/yum
 	url = https://github.com/CERIT-SC/puppet-yum.git
@@ -29,7 +29,7 @@
 [submodule "modules/kibana"]
         path = modules/kibana
         url = https://github.com/elastic/puppet-kibana.git
-        branch = releases/tag/5.0.0
+        branch = releases/tag/5.1.0
 [submodule "modules/apache"]
         path = modules/apache
         url = https://github.com/puppetlabs/puppetlabs-apache.git
@@ -45,4 +45,4 @@
 [submodule "modules/concat"]
 	path = modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat.git
-        branch = 3.0.0
+        branch = 4.0.1
