@@ -10,14 +10,14 @@ small_environment = {
 
 medium_environment = {
   :mdcluster => '192.168.99.10',
-  :apache  => '192.168.99.20'
+  :apache    => '192.168.99.20'
 }
 
 Vagrant.configure("2") do |config|
 
   # Define the base box we want to play with, and some always-on-everything
   # items.
-  config.vm.box = 'ubuntu/trusty64'
+  config.vm.box = 'bento/ubuntu-16.10'
   config.vm.provision "shell", :path => "vup"
   # Define the Hiera directory
   # Use this for your own.
@@ -26,12 +26,13 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder "hiera/" "/etc/puppet-hiera"
 
   puppet_common = proc do |puppet|
-    puppet.manifests_path = "manifests"
-    puppet.manifest_file  = "site.pp"
-    puppet.module_path    = "modules"
+    puppet.manifests_path    = "manifests"
+    puppet.manifest_file     = "site.pp"
+    puppet.module_path       = "modules"
+    puppet.environment_path  = "environments"
+    puppet.environment       = "production"
     puppet.hiera_config_path = "hiera.yaml"
     puppet.working_directory = "/tmp/vagrant-puppet"
-    puppet.options = "--environment=prod" # --verbose --debug --trace"
   end
 
   config.vm.define :onebox_nasa do |onebox_nasa|
@@ -41,7 +42,8 @@ Vagrant.configure("2") do |config|
       puppet_common.call(puppet)
       puppet.facter = {
         "node_type"      => 'onebox_nasa',
-        "hostname"       => 'onebox_nasa'
+        "hostname"       => 'onebox_nasa',
+        "env_type"       => 'onebox'
       }
     end
     onebox_nasa.vm.provider :virtualbox do |vb|
@@ -62,7 +64,8 @@ Vagrant.configure("2") do |config|
       puppet_common.call(puppet)
       puppet.facter = {
         "node_type"      => 'onebox_syslog',
-        "hostname"       => 'onebox_syslog'
+        "hostname"       => 'onebox_syslog',
+        "env_type"       => 'onebox'
       }
     end
     onebox_syslog.vm.provider :virtualbox do |vb|

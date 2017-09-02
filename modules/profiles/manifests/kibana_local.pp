@@ -1,10 +1,12 @@
-# Installs Kibana4, in local mode with no proxies.
+# Installs Kibana, in local mode with no proxies.
 class profiles::kibana_local {
 
-  class { '::kibana4':
-    manage_repo => true,
-    config      => {
-      'server.port' => 3010
+  class { '::kibana':
+    ensure => '5.4.1',
+    config => {
+      'server.port'       => 3010,
+      'server.host'       => $networking['interfaces']['enp0s8']['ip'],
+      'elasticsearch.url' => 'http://localhost:9200',
     }
   }
 

@@ -10,13 +10,12 @@ class profiles::logstash::output_onebox {
     owner   => 'logstash',
     group   => 'logstash',
     source  => 'puppet:///modules/profiles/logstash/templates/onebox.json',
-    require => Logstash::Configfile ['output_onebox_es'],
+    require => Logstash::Configfile['50-output_onebox_es'],
     notify  => Service['logstash'],
   }
 
-  logstash::configfile { 'output_onebox_es':
-    template => 'profiles/logstash/output/onebox_es',
-    order    => 50,
+  logstash::configfile { '50-output_onebox_es':
+    content => template('profiles/logstash/output/onebox_es'),
   }
 
 }

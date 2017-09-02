@@ -7,7 +7,7 @@ filter {
   if [message] =~ "Authentication_request" {
     grok {
       match => {
-        message => "Authentication_request: %{GREEDYDATA:auth_message}"
+        message => "Authentication_request: %{GREEDYDATA:auth_message}$"
       }
     }
     add_field => {

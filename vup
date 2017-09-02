@@ -7,25 +7,36 @@ else
   UBU_RELEASE='trusty'
 fi
 
+function puppet_up {
+echo "Setting up Puppetlabs repo."
+echo "# Puppetlabs products
+deb http://apt.puppetlabs.com ${UBU_RELEASE} PC1
+" > /etc/apt/sources.list.d/puppetlabs.list
+
+echo "Pinning puppet-agent to puppetlabs"
+echo "Package: puppet-agent
+Pin: origin "apt.puppetlabs.org"
+Pin-Priority: 1000
+" > /etc/apt/preferences.d/puppetlabs.pref
+
+curl -s http://apt.puppetlabs.com/pubkey.gpg | apt-key add -
+apt-get update
+apt-get remove puppet-common -y
+apt-get purge puppet-common -y
+apt-get install puppet-agent=1.10.3-1${UBU_RELEASE} -y
+ln -s /opt/puppetlabs/bin/facter /usr/local/bin/facter
+ln -s /opt/puppetlabs/bin/puppet /usr/local/bin/puppet
+}
+
+echo "Setting up noexec /tmp..."
 if [ -f /root/puppet_upgraded ]; then
   echo "Puppet already upgraded, skipping to next provisioner."
   exit 0
 else
-  echo "Setting up Puppetlabs repo."
-  echo "# Puppetlabs products
-deb http://apt.puppetlabs.com ${UBU_RELEASE} main
-deb-src http://apt.puppetlabs.com ${UBU_RELEASE} main
-
-# Puppetlabs dependencies
-deb http://apt.puppetlabs.com ${UBU_RELEASE} dependencies
-deb-src http://apt.puppetlabs.com ${UBU_RELEASE} dependencies
-" > /etc/apt/sources.list.d/puppetlabs.list
-
-  curl -s http://apt.puppetlabs.com/pubkey.gpg | apt-key add -
-  apt-get update -q
-  # The following should track whatever is in:
-  # https://github.com/HelloFax/hellosign-packer/blob/master/puppet-bootstrap.sh
-  apt-get install -q puppet-common hiera facter -y
+  echo "Disabling Chef client..."
+  service chef-client stop
+  update-rc.d chef-client disable
+  echo "Running puppet..."
+  puppet_up
   touch /root/puppet_upgraded
 fi
-

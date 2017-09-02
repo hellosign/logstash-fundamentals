@@ -72,7 +72,7 @@ filter {
     }
   }
   
-  # Like drop the debug lines in the info feeds.
+  # Drop the debug lines in the info feeds.
   if [type] == "applog" AND [info][message] =~ "^DEBUG:" {
     drop {}
   }
@@ -81,7 +81,7 @@ filter {
   if [type] == "applog" AND [info][message] =~ "^metrics: " {
     grok {
       match => {
-        "info.message" => "metrics: %{GREEDYDATA:metrics_raw}"
+        "info.message" => "^metrics: %{GREEDYDATA:metrics_raw}$"
       }
       tag => [ "metrics" ]
     }

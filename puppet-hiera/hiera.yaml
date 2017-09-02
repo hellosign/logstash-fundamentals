@@ -1,12 +1,11 @@
 ---
-:hierarchy:
-  - "node-type/%{node_type}"
-  - "env-type/%{env_type}"
-  - common
-:backends:
-  - yaml
-:yaml:
-  :datadir: '.'
-
----
-:merge_behavior: deeper
+version: 5
+defaults:
+  datadir: /etc/puppet-hiera/
+  data_hash: yaml_data
+hierarchy:
+  - name: "Yaml lookup hierarchy"
+    paths:
+      - "node-type/%{node_type}.yaml"
+      - "env-type/%{env_type}.yaml"
+      - common

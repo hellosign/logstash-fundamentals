@@ -1,5 +1,5 @@
-# This role constructs an example LogStash box that pulls information from
-# various NASA twitter feeds. It contains:
+# This role constructs an example LogStash box that sets up a syslog-plugin
+# based logstash service. It contains:
 # - LogStash
 # - ElasticSearch
 # - Kibana
@@ -14,7 +14,7 @@ class roles::onebox_syslog {
   }
 
   # We need java, this gets it.
-  ensure_packages ( 'openjdk-7-jre-headless', { require => Exec['apt_update'] } )
+  ensure_packages ( 'openjdk-8-jre-headless', { require => Exec['apt_update'] } )
 
   ## Next, set up logstash. Note the use of the 'require'.
   #  Unlike onebox_nasa, we need to run as root in order to bind
@@ -30,8 +30,7 @@ class roles::onebox_syslog {
 
   # Next, set up Kibana.
 
-  class { 'profiles::kibana_local':
-  }
+  class { 'profiles::kibana_local': }
 
   # Next, get Curator set up
 

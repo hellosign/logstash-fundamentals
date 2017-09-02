@@ -3,15 +3,15 @@ class profiles::base {
 
   include apt
 
-  case $::virtual {
+  case $virtual {
     'xenu':   {
       $vm_user = 'ubuntu'
     }
-    'virtualbox':  {
+    [ 'virtualbox', 'kvm' ]:  {
       $vm_user = 'vagrant'
     }
     default:  {
-      $vm_user = 'ubuntu'
+      $vm_user = 'vagrant'
     }
   }
 
@@ -29,6 +29,11 @@ class profiles::base {
     group  => 'root',
     mode   => '0644',
     source => 'puppet:///modules/profiles/base/hcl.vim',
+  }
+
+  service { [ 'puppet-agent', 'pxp-agent', 'mcollective' ]:
+    enable => false,
+    ensure => stopped
   }
 
 }
